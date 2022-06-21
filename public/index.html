@@ -24,6 +24,7 @@
         padding: 0;
         margin: 0;
         font-family: "Open Sans", sans-serif;
+        transition-duration: 300ms;
       }
       body {
         display: flex;
@@ -73,7 +74,6 @@
       form div div {
         color: greenyellow;
         cursor: pointer;
-        transition-duration: 300ms;
         width: fit-content;
       }
       form div div:hover {
@@ -90,10 +90,50 @@
         font-size: 1.2rem;
         margin: 18px auto;
       }
+
+      form div input:hover {
+        background-color: transparent;
+        color: cyan;
+      }
+
+      #question {
+        border: 1px solid transparent;
+        border-bottom: 1px solid aqua;
+        margin: 4px 0 12px 0;
+        font-size: 1.2rem;
+        padding: 14px 12px;
+      }
+
+      #question:focus {
+        border: 1px solid aqua;
+      }
+
+      #question:hover {
+        opacity: 0.8;
+      }
+
+      .options {
+        padding: relative;
+        padding-left: 20px;
+        flex: 1;
+        color: white;
+        border-bottom: 1px solid transparent;
+        padding: 6px 3px;
+      }
+
+      .options:hover {
+        border-bottom: 1px solid greenyellow;
+      }
+
+      form label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
     </style>
   </head>
   <body>
-    <form>
+    <form action="#" onsubmit="funcSubmit(this)">
       <h1>Poll App</h1>
       <input
         type="text"
@@ -120,8 +160,34 @@
       /></label>
       <div id="buttons">
         <div id="add"><i class="fa-solid fa-plus"></i></div>
-        <input type="submit" value="poll" />
+        <input type="submit" value="poll" id="submit" />
       </div>
     </form>
+
+    <script>
+      const labels = document.querySelectorAll("form label");
+
+      labels.forEach((label) => {
+        label.innerHTML = `<i class="fa-solid fa-atom"></i>` + label.innerHTML;
+      });
+
+      const addBtn = document.getElementById("add");
+      const form = document.querySelector("form");
+      const btns = document.getElementById("buttons");
+      function addOption() {
+        const newNode = document.createElement("label");
+        form.insertBefore(newNode, btns);
+        document.querySelector("label:last-of-type").innerHTML =
+          `<i class="fa-solid fa-atom"></i>` +
+          `<input type='text' required class='options' placeholder="..."/>`;
+      }
+
+      addBtn.addEventListener("click", addOption);
+
+      const submitBtn = document.getElementById("submit");
+      async function funcSubmit(e) {
+        console.log("hello");
+      }
+    </script>
   </body>
 </html>
